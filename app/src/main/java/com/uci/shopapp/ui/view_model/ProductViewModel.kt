@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductViewModel @Inject constructor(private val shopDatabase: ShopDatabase) : ViewModel() {
 
-    val productModel = MutableLiveData<List<ProductEntity>>()
+    val productModel = MutableLiveData<MutableList<ProductEntity>>()
 
     suspend fun getAllProducts() {
         productModel.postValue(shopDatabase.getProductDao().getAllProducts())
@@ -22,7 +22,7 @@ class ProductViewModel @Inject constructor(private val shopDatabase: ShopDatabas
         productModel.postValue(shopDatabase.getProductDao().getAllProducts())
         return success
     }
-    suspend fun addAllProducts(products:List<ProductEntity>){
+    suspend fun addAllProducts(products:MutableList<ProductEntity>){
         shopDatabase.getProductDao().insertAll(products)
     }
     suspend fun addDummyProducts(){
