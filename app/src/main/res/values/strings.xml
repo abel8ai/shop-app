@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">ShopApp</string>
+    <string name="app_name">Shop App</string>
+    <string name="user">User</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="my_products_frag">Mis Productos</string>
+    <string name="profile_frag">Perfil</string>
+    <string name="settings_frag">Configuraciones</string>
 </resources>
