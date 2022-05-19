@@ -14,7 +14,10 @@
         android:theme="@style/Theme.ShopApp"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.view.NavigationDrawerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

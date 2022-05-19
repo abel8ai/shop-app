@@ -4,6 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Abel/AndroidStudioProjects/Shop_App/app/src/main/res/layout/activity_login.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/Abel/AndroidStudioProjects/Shop_App/app/src/main/res/layout/activity_navigation_drawer.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abel/AndroidStudioProjects/Shop_App/app/src/main/res/layout/fragment_my_products.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abel/AndroidStudioProjects/Shop_App/app/src/main/res/layout/fragment_products.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abel/AndroidStudioProjects/Shop_App/app/src/main/res/layout/fragment_profile.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abel/AndroidStudioProjects/Shop_App/app/src/main/res/layout/fragment_settings.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abel/AndroidStudioProjects/Shop_App/app/src/main/res/menu/nav_menu_items.xml" value="0.2" />
       </map>
     </option>
   </component>
