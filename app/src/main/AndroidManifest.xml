@@ -7,6 +7,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:name=".ShopApp"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -14,8 +15,8 @@
         android:theme="@style/Theme.ShopApp"
         tools:targetApi="31">
         <activity
-            android:name=".ProductDetailsActivity"
-            android:exported="false" />
+            android:name=".ui.view.ProductDetailsActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.view.NavigationDrawerActivity"
             android:exported="true" />
