@@ -22,6 +22,7 @@ class NavigationDrawerActivity : AppCompatActivity() {
         setContentView(binding.root)
         toogle = ActionBarDrawerToggle(this, binding.drawerLayout,R.string.drawer_open, R.string.drawer_close)
         binding.drawerLayout.addDrawerListener(toogle)
+        replaceFragment(ProductsFragment(),"Productos")
         toogle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
