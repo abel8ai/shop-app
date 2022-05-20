@@ -6,7 +6,8 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="accept">Aceptar</string>
-    <string name="cancel">CAncelar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="buy">Comprar</string>
 
     <string name="my_products_frag">Mis Productos</string>
     <string name="profile_frag">Perfil</string>

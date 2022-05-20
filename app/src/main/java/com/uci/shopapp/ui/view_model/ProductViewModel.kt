@@ -28,6 +28,7 @@ class ProductViewModel @Inject constructor(private val shopDatabase: ShopDatabas
     }
     suspend fun addDummyProducts(){
         val list = mutableListOf<ProductEntity>()
+
         for (i in 0..50){
             val product = ProductEntity(null,"Producto $i","Descripcion del producto $i",300.0)
             list.add(product)

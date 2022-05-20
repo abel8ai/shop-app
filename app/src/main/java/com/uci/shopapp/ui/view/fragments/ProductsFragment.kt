@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -56,7 +57,7 @@ class ProductsFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        manager = LinearLayoutManager(context)
+        manager = GridLayoutManager(context,2)
         binding.rvProducts.layoutManager = manager
         adapter = ProductAdapter(productList)
         binding.rvProducts.adapter = adapter
@@ -83,6 +84,7 @@ class ProductsFragment : Fragment() {
     private fun getMoreData() {
         val lastElement = sectionProductList.get(sectionProductList.size - 1).id
         sectionProductList.add(productList.get(lastElement!!))
+        sectionProductList.add(productList.get(lastElement+1))
         adapter.notifyDataSetChanged()
 
     }

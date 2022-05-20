@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cv_element"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+    app:cardBackgroundColor="@color/light_blue_50"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#8DC8DF">
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_icon"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/shop_item" />
 
             <TextView
                 android:id="@+id/tv_docName"
-                android:layout_width="match_parent"
+                android:layout_below="@id/iv_icon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Producto"
-                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                tools:text="Producto"
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="25dp"
+                android:textSize="27sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_toEndOf="@+id/iv_icon"
-                android:layout_centerVertical="true"/>
+                android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
 
