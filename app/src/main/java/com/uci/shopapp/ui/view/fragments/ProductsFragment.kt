@@ -1,23 +1,40 @@
 package com.uci.shopapp.ui.view.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.uci.shopapp.R
-import com.uci.shopapp.data.model.database.entities.ProductEntity
-import com.uci.shopapp.databinding.FragmentMyProductsBinding
-import com.uci.shopapp.databinding.FragmentProductsBinding
-import com.uci.shopapp.databinding.FragmentProfileBinding
-import com.uci.shopapp.ui.view.adapters.ProductAdapter
+import androidx.recyclerview.widget.RecyclerView
 
+import com.uci.shopapp.data.model.database.entities.ProductEntity
+import com.uci.shopapp.databinding.FragmentProductsBinding
+import com.uci.shopapp.ui.view.adapters.ProductAdapter
+import com.uci.shopapp.ui.view_model.ProductViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
 class ProductsFragment : Fragment() {
     private var _binding: FragmentProductsBinding? = null
     private val binding get() = _binding!!
+    private val productViewModel: ProductViewModel by viewModels()
     private lateinit var adapter: ProductAdapter
-    private val productList = emptyList<ProductEntity>()
+    private var productList = mutableListOf<ProductEntity>()
+    private var sectionProductList = mutableListOf<ProductEntity>()
+    var isScrolling = false
+    var currentItems: Int = 0
+    var scrolledItems: Int = 0
+    var totalItems: Int = 0
+    private lateinit var manager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,14 +42,59 @@ class ProductsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentProductsBinding.inflate(inflater, container, false)
+        productViewModel
+        productViewModel.productsModel.observe(activity!!, Observer {
+            productList = it
+            for (i in 0..9) {
+                sectionProductList.add(it[i])
+            }
+            adapter = ProductAdapter(sectionProductList)
+            binding.rvProducts.adapter = adapter
+        })
         initRecyclerView()
+        loadData()
         return binding.root
     }
 
     private fun initRecyclerView() {
-        binding.rvProducts.layoutManager = LinearLayoutManager(context)
+        manager = GridLayoutManager(context,2)
+        binding.rvProducts.layoutManager = manager
         adapter = ProductAdapter(productList)
         binding.rvProducts.adapter = adapter
+        binding.rvProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                currentItems = manager.childCount
+                totalItems = manager.itemCount
+                scrolledItems = manager.findFirstVisibleItemPosition()
+                if (isScrolling && currentItems + scrolledItems == totalItems) {
+                    isScrolling = false
+                    getMoreData()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                    isScrolling = true
+            }
+        })
+    }
+
+    private fun getMoreData() {
+        val lastElement = sectionProductList.get(sectionProductList.size - 1).id
+        sectionProductList.add(productList.get(lastElement!!))
+        sectionProductList.add(productList.get(lastElement+1))
+        adapter.notifyDataSetChanged()
 
     }
+
+    private fun loadData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            productViewModel.addDummyProducts()
+            productViewModel.getAllProducts()
+        }
+
+    }
+
 }

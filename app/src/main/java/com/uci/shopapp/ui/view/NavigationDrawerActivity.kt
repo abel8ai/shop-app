@@ -3,6 +3,7 @@ package com.uci.shopapp.ui.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import com.uci.shopapp.R
@@ -11,7 +12,10 @@ import com.uci.shopapp.ui.view.fragments.MyProductsFragment
 import com.uci.shopapp.ui.view.fragments.ProductsFragment
 import com.uci.shopapp.ui.view.fragments.ProfileFragment
 import com.uci.shopapp.ui.view.fragments.SettingsFragment
+import com.uci.shopapp.ui.view_model.ProductViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NavigationDrawerActivity : AppCompatActivity() {
     private lateinit var binding : ActivityNavigationDrawerBinding
     private lateinit var toogle : ActionBarDrawerToggle
