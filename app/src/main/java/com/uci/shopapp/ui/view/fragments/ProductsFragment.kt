@@ -34,6 +34,7 @@ class ProductsFragment : Fragment() {
     var currentItems: Int = 0
     var scrolledItems: Int = 0
     var totalItems: Int = 0
+    var lastitem: Int = 0
     private lateinit var manager: LinearLayoutManager
 
     override fun onCreateView(
@@ -67,7 +68,7 @@ class ProductsFragment : Fragment() {
                 currentItems = manager.childCount
                 totalItems = manager.itemCount
                 scrolledItems = manager.findFirstVisibleItemPosition()
-                if (isScrolling && currentItems + scrolledItems == totalItems) {
+                if (isScrolling && currentItems + scrolledItems == totalItems && sectionProductList.size<productList.size) {
                     isScrolling = false
                     getMoreData()
                 }
@@ -83,10 +84,11 @@ class ProductsFragment : Fragment() {
 
     private fun getMoreData() {
         val lastElement = sectionProductList.get(sectionProductList.size - 1).id
-        sectionProductList.add(productList.get(lastElement!!))
-        sectionProductList.add(productList.get(lastElement+1))
-        adapter.notifyDataSetChanged()
-
+        if(lastElement!! < productList.size-1) {
+            sectionProductList.add(productList.get(lastElement))
+            sectionProductList.add(productList.get(lastElement + 1))
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun loadData() {
