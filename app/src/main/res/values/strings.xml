@@ -5,8 +5,13 @@
     <string name="sign_in">Sign In</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">CAncelar</string>
 
     <string name="my_products_frag">Mis Productos</string>
     <string name="profile_frag">Perfil</string>
     <string name="settings_frag">Configuraciones</string>
+    <string name="confirm_purchase">Confirme que desea comprar este producto</string>
+    <string name="confirm_purchase_title">Confirmar compra</string>
+    <string name="purchase_notification">Compra realizada con éxito</string>
 </resources>

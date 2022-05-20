@@ -14,7 +14,7 @@ class ProductViewHolder(view:View):RecyclerView.ViewHolder(view){
         binding.tvDocName.text = product.name
         binding.cvElement.setOnClickListener{
             val intent = Intent(binding.root.context,ProductDetailsActivity::class.java)
-            intent.putExtra("product",product)
+            intent.putExtra("product_id",product.id)
             binding.root.context.startActivity(intent)
         }
     }

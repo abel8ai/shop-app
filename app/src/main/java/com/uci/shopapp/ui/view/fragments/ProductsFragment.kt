@@ -30,9 +30,9 @@ class ProductsFragment : Fragment() {
     private var productList = mutableListOf<ProductEntity>()
     private var sectionProductList = mutableListOf<ProductEntity>()
     var isScrolling = false
-    var currentItems : Int = 0
-    var scrolledItems : Int = 0
-    var totalItems : Int = 0
+    var currentItems: Int = 0
+    var scrolledItems: Int = 0
+    var totalItems: Int = 0
     private lateinit var manager: LinearLayoutManager
 
     override fun onCreateView(
@@ -42,7 +42,7 @@ class ProductsFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentProductsBinding.inflate(inflater, container, false)
         productViewModel
-        productViewModel.productModel.observe(activity!!, Observer {
+        productViewModel.productsModel.observe(activity!!, Observer {
             productList = it
             for (i in 0..9) {
                 sectionProductList.add(it[i])
@@ -66,7 +66,7 @@ class ProductsFragment : Fragment() {
                 currentItems = manager.childCount
                 totalItems = manager.itemCount
                 scrolledItems = manager.findFirstVisibleItemPosition()
-                if (isScrolling && currentItems+scrolledItems == totalItems) {
+                if (isScrolling && currentItems + scrolledItems == totalItems) {
                     isScrolling = false
                     getMoreData()
                 }
@@ -81,9 +81,8 @@ class ProductsFragment : Fragment() {
     }
 
     private fun getMoreData() {
-            val lastElement = sectionProductList.get(sectionProductList.size - 1).id
-            sectionProductList.removeFirst()
-            sectionProductList.add(productList.get(lastElement!!))
+        val lastElement = sectionProductList.get(sectionProductList.size - 1).id
+        sectionProductList.add(productList.get(lastElement!!))
         adapter.notifyDataSetChanged()
 
     }

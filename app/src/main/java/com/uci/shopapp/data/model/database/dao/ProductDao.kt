@@ -12,6 +12,9 @@ interface ProductDao {
     @Query("Select * from product_table")
     suspend fun getAllProducts():MutableList<ProductEntity>
 
+    @Query("Select * from product_table where product_id = :id")
+    suspend fun getProductById(id:Int):ProductEntity
+
     @Insert(onConflict = IGNORE)
     suspend fun insertAll(products:MutableList<ProductEntity>): List<Long>
 
