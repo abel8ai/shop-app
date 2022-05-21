@@ -3,7 +3,7 @@ package com.uci.shopapp.ui.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +20,7 @@ import com.uci.shopapp.ui.view.fragments.ProfileFragment
 import com.uci.shopapp.ui.view.fragments.SettingsFragment
 import com.uci.shopapp.ui.view_model.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 
 
 @AndroidEntryPoint
@@ -43,6 +44,19 @@ class NavigationDrawerActivity : AppCompatActivity() {
         googleAccount = intent.extras?.get("google_account") as GoogleSignInAccount?
         facebookToken = intent.extras?.get("facebook_token") as AccessToken?
         binding.drawerLayout.addDrawerListener(toogle)
+        if (googleAccount != null) {
+            val signedUser =
+                binding.navView.getHeaderView(0).findViewById(R.id.tv_signed_user) as TextView
+            signedUser.text = googleAccount!!.givenName
+        }
+        else if (facebookToken != null) {
+            val signedUser = binding.navView.getHeaderView(0).findViewById(R.id.tv_signed_user) as TextView
+            val request = GraphRequest.newMeRequest(facebookToken) { `object`, response ->
+                signedUser.text = response?.jsonObject?.getString("name")
+            }
+            request.executeAsync();
+        }
+
         replaceFragment(ProductsFragment(), "Productos")
         toogle.syncState()
 
@@ -57,13 +71,12 @@ class NavigationDrawerActivity : AppCompatActivity() {
                 R.id.nav_settings -> replaceFragment(SettingsFragment(), "Configuraciones")
                 R.id.nav_profile -> replaceFragment(ProfileFragment(), "Perfil")
                 R.id.nav_logoff -> {
-                    if (googleAccount != null){
+                    if (googleAccount != null) {
                         googleSignOut()
                         googleRevokeAccess()
                         finish()
-                        startActivity(Intent(this,LoginActivity::class.java))
-                    }
-                    else if (facebookToken != null){
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    } else if (facebookToken != null) {
                         GraphRequest(
                             AccessToken.getCurrentAccessToken(),
                             "/me/permissions/",
@@ -71,7 +84,7 @@ class NavigationDrawerActivity : AppCompatActivity() {
                             HttpMethod.DELETE,
                             { LoginManager.getInstance().logOut() }).executeAsync()
                         finish()
-                        startActivity(Intent(this,LoginActivity::class.java))
+                        startActivity(Intent(this, LoginActivity::class.java))
                     }
                 }
             }

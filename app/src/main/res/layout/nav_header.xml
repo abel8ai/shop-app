@@ -5,6 +5,7 @@
     android:layout_height="200sp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <TextView
+            android:id="@+id/tv_signed_user"
             android:layout_width="wrap_content"
             android:textStyle="bold"
             android:text="Nombre"
