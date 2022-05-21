@@ -19,6 +19,11 @@
     <string name="purchase_notification">Compra realizada con éxito</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="texto">Caution: If you need a Context object within your Fragment, you can call getActivity(). However, be careful to call getActivity() only when the fragment is attached to an activity. When the fragment is not yet attached, or was detached during the end of its lifecycle, getActivity() will return null</string>
-    <string name="default_info_title">ppppppp</string>
-    <string name="default_info_snippet">ppppppp</string>
+    <string name="default_info_title">default</string>
+    <string name="default_info_snippet">default</string>
+    <string name="facebook_login_error">Fallo al intentar autenticarse</string>
+
+    <string name="facebook_app_id">5537092076309547</string>
+    <string name="fb_login_protocol_scheme">fb5537092076309547</string>
+    <string name="facebook_client_token">073eaa61172860c61e409f2a4986fa26</string>
 </resources>
