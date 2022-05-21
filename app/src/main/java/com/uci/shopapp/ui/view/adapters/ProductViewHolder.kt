@@ -11,7 +11,8 @@ class ProductViewHolder(view:View):RecyclerView.ViewHolder(view){
 
     private val binding = ItemProductBinding.bind(view)
     fun bind(product: ProductEntity){
-        binding.tvDocName.text = product.name
+        binding.tvProductName.text = product.name
+        binding.tvProductPrice.text = product.price.toString()
         binding.cvElement.setOnClickListener{
             binding.pbarProducts.visibility = View.VISIBLE
             binding.ivIcon.visibility = View.INVISIBLE
