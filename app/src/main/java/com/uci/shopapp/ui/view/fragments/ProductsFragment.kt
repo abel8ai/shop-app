@@ -44,6 +44,7 @@ class ProductsFragment : Fragment() {
         _binding = FragmentProductsBinding.inflate(inflater, container, false)
         productViewModel
         productViewModel.productsModel.observe(activity!!, Observer {
+            sectionProductList.clear()
             productList = it
             for (i in 0..9) {
                 sectionProductList.add(it[i])
@@ -104,5 +105,4 @@ class ProductsFragment : Fragment() {
         loadData()
         adapter.notifyDataSetChanged()
     }
-
 }

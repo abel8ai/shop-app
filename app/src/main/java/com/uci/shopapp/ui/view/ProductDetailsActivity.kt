@@ -87,6 +87,7 @@ class ProductDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         productViewModel.productModel.observe(this, Observer {
             binding.tvProductName.text = it.name
             binding.tvProductDescription.text = it.description
+            binding.tvProductPrice.text = "$"+it.price.toString()
             binding.btnBuy.setOnClickListener {
                 confirmPurchaseDialog()
             }

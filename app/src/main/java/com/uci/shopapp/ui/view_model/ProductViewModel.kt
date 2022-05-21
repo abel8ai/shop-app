@@ -30,7 +30,10 @@ class ProductViewModel @Inject constructor(private val shopDatabase: ShopDatabas
         val list = mutableListOf<ProductEntity>()
 
         for (i in 0..50){
-            val product = ProductEntity(null,"Producto $i","Descripcion del producto $i",300.0)
+            val price = (150..300).random().toDouble()
+
+            val description = "Producto nuevo de alta gama. Buena relación calidad-precio y ensamblado con materiales premium. Garantizada su durabilidad y buen desempeño"
+            val product = ProductEntity(null,"Producto $i",description,price)
             list.add(product)
         }
         shopDatabase.getProductDao().insertAll(list)

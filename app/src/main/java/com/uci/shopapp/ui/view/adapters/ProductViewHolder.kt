@@ -12,7 +12,7 @@ class ProductViewHolder(view:View):RecyclerView.ViewHolder(view){
     private val binding = ItemProductBinding.bind(view)
     fun bind(product: ProductEntity){
         binding.tvProductName.text = product.name
-        binding.tvProductPrice.text = product.price.toString()
+        binding.tvProductPrice.text = "$"+product.price.toString()
         binding.cvElement.setOnClickListener{
             binding.pbarProducts.visibility = View.VISIBLE
             val intent = Intent(binding.root.context,ProductDetailsActivity::class.java)
