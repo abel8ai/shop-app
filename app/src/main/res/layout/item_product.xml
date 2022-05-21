@@ -5,7 +5,7 @@
         android:id="@+id/cv_element"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="8dp"
         app:cardCornerRadius="10dp">
 
         <RelativeLayout
@@ -13,18 +13,22 @@
             android:layout_height="wrap_content">
 
             <ProgressBar
-                android:layout_margin="10dp"
                 android:id="@+id/pbar_products"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:layout_width="20sp"
-                android:layout_height="20sp"/>
+                android:layout_height="20sp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
             <ImageView
                 android:id="@+id/iv_icon"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/product" />
+                android:src="@drawable/product_redux" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_below="@id/iv_icon"
@@ -40,7 +44,7 @@
                     tools:text="Producto"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="20sp"/>
+                    android:textSize="17sp"/>
                 <TextView
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

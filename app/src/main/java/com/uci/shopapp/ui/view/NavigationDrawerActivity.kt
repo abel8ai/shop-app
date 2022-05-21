@@ -1,5 +1,6 @@
 package com.uci.shopapp.ui.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -30,6 +31,7 @@ class NavigationDrawerActivity : AppCompatActivity() {
     private lateinit var toogle: ActionBarDrawerToggle
     private var googleAccount: GoogleSignInAccount? = null
     private var facebookToken: AccessToken? = null
+    private lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,20 +43,20 @@ class NavigationDrawerActivity : AppCompatActivity() {
             R.string.drawer_open,
             R.string.drawer_close
         )
+        context = this
         googleAccount = intent.extras?.get("google_account") as GoogleSignInAccount?
         facebookToken = intent.extras?.get("facebook_token") as AccessToken?
         binding.drawerLayout.addDrawerListener(toogle)
-        val signedUser = binding.navView.getHeaderView(0).findViewById(R.id.tv_signed_user) as TextView
+        val signedUser =
+            binding.navView.getHeaderView(0).findViewById(R.id.tv_signed_user) as TextView
         if (googleAccount != null) {
             signedUser.text = googleAccount!!.givenName
-        }
-        else if (facebookToken != null) {
+        } else if (facebookToken != null) {
             val request = GraphRequest.newMeRequest(facebookToken) { `object`, response ->
                 signedUser.text = response?.jsonObject?.getString("name")
             }
             request.executeAsync();
-        }
-        else
+        } else
             signedUser.text = "peter"
 
 
@@ -75,21 +77,20 @@ class NavigationDrawerActivity : AppCompatActivity() {
                     if (googleAccount != null) {
                         googleSignOut()
                         googleRevokeAccess()
-                        finish()
-                        startActivity(Intent(this, LoginActivity::class.java))
                     } else if (facebookToken != null) {
                         GraphRequest(
                             AccessToken.getCurrentAccessToken(),
                             "/me/permissions/",
                             null,
                             HttpMethod.DELETE,
-                            { LoginManager.getInstance().logOut() }).executeAsync()
-                        finish()
+                            {
+                                LoginManager.getInstance().logOut()
+                                startActivity(Intent(context, LoginActivity::class.java))
+                                this.finish()
+                            }).executeAsync()
+                    } else {
                         startActivity(Intent(this, LoginActivity::class.java))
-                    }
-                    else{
-                        finish()
-                        startActivity(Intent(this, LoginActivity::class.java))
+                        this.finish()
                     }
                 }
             }
@@ -115,7 +116,8 @@ class NavigationDrawerActivity : AppCompatActivity() {
     private fun googleSignOut() {
         userViewModel.getSignInClient().signOut()
             .addOnCompleteListener(this) {
-                // ...
+                startActivity(Intent(this, LoginActivity::class.java))
+                this.finish()
             }
     }
 

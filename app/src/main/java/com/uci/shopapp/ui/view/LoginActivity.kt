@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnSignInGoogle.setOnClickListener {
             signIn()
         }
-        binding.btnSignInFacebook.setReadPermissions(Arrays.asList("email","name", "public_profile"))
+        binding.btnSignInFacebook.setReadPermissions(Arrays.asList("email", "public_profile"))
         binding.btnSignInFacebook.registerCallback(
             callbackManager,
             object : FacebookCallback<LoginResult?> {
