@@ -4,47 +4,53 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.result.ActivityResultCaller
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.uci.shopapp.databinding.ActivityLoginBinding
-import com.uci.shopapp.ui.view_model.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 44556
-    private val userViewModel: UserViewModel by viewModels()
+
+    //private val userViewModel: UserViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, NavigationDrawerActivity::class.java)
             startActivity(intent)
         }
-        binding.signInButton.setSize(SignInButton.SIZE_STANDARD)
-        binding.signInButton.setOnClickListener {
+        binding.btnSignInGoogle.setSize(SignInButton.SIZE_WIDE)
+        binding.btnSignInGoogle.setOnClickListener {
             signIn()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        val account = userViewModel.getSignedInAccount()
+        val account = GoogleSignIn.getLastSignedInAccount(this)
         updateUI(account)
     }
 
     private fun signIn() {
-        val signInIntent = userViewModel.getSignInClient().signInIntent
+        val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -52,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
     }
@@ -70,8 +76,9 @@ class LoginActivity : AppCompatActivity() {
             updateUI(null)
         }
     }
-    private fun updateUI(account: GoogleSignInAccount?){
-        if (account !=null)
-            startActivity(Intent(this, NavigationDrawerActivity::class.java))
+
+    private fun updateUI(account: GoogleSignInAccount?) {
+        if (account != null)
+            startActivity(Intent(this,NavigationDrawerActivity::class.java))
     }
 }
