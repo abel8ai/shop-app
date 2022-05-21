@@ -4,32 +4,29 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.uci.shopapp.databinding.ActivityLoginBinding
+import com.uci.shopapp.ui.view_model.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 44556
 
-    //private val userViewModel: UserViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        updateUI(account)
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, NavigationDrawerActivity::class.java)
             startActivity(intent)
@@ -40,14 +37,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        updateUI(account)
-    }
-
     private fun signIn() {
-        val signInIntent = mGoogleSignInClient.signInIntent
+        val signInIntent = userViewModel.getSignInClient().signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
@@ -78,7 +69,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI(account: GoogleSignInAccount?) {
-        if (account != null)
-            startActivity(Intent(this,NavigationDrawerActivity::class.java))
+        if (account != null){
+            val intent = Intent(this,NavigationDrawerActivity::class.java)
+            intent.putExtra("account",account)
+            startActivity(intent)
+
+        }
+
+
     }
 }

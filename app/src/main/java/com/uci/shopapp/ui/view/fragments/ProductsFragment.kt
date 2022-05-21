@@ -34,7 +34,6 @@ class ProductsFragment : Fragment() {
     var currentItems: Int = 0
     var scrolledItems: Int = 0
     var totalItems: Int = 0
-    var lastitem: Int = 0
     private lateinit var manager: GridLayoutManager
 
     override fun onCreateView(

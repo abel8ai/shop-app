@@ -8,7 +8,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(private val shopDatabase: ShopDatabase) : ViewModel() {
+class UserViewModel @Inject constructor(private val signInClient: GoogleSignInClient,
+                                        /*private val signInAccount: GoogleSignInAccount?*/) : ViewModel() {
 
+    fun getSignInClient() = signInClient
+
+    //fun getSignInAccount() = signInAccount
 
 }
