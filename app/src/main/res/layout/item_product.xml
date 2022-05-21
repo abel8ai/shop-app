@@ -52,7 +52,7 @@
                     android:layout_toEndOf="@id/tv_product_name"
                     tools:text="$$$"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/quantum_amber700"
                     android:textSize="15sp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

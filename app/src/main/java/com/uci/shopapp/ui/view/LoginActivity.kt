@@ -46,6 +46,9 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, NavigationDrawerActivity::class.java)
             startActivity(intent)
         }
+        binding.llLoginForm.setOnClickListener {
+            Toast.makeText(context, R.string.forgot_pass_error, Toast.LENGTH_SHORT).show()
+        }
         binding.btnSignInGoogle.setSize(SignInButton.SIZE_WIDE)
         binding.btnSignInGoogle.setOnClickListener {
             signIn()
