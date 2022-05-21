@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -43,10 +44,17 @@ class LoginActivity : AppCompatActivity() {
         startWithfacebook(facebookToken)
         callbackManager = CallbackManager.Factory.create()
         binding.btnLogin.setOnClickListener {
-            val intent = Intent(this, NavigationDrawerActivity::class.java)
-            startActivity(intent)
+            val user = binding.etUser.text.toString()
+            val pass = binding.etPassword.text.toString()
+            val isValidUser = userViewModel.doDummyLogin(user, pass)
+            if (isValidUser){
+                val intent = Intent(this, NavigationDrawerActivity::class.java)
+                startActivity(intent)
+            }
+            else
+                Toast.makeText(context, R.string.auth_error, Toast.LENGTH_LONG).show()
         }
-        binding.llLoginForm.setOnClickListener {
+        binding.tvForgotPass.setOnClickListener {
             Toast.makeText(context, R.string.forgot_pass_error, Toast.LENGTH_SHORT).show()
         }
         binding.btnSignInGoogle.setSize(SignInButton.SIZE_WIDE)
@@ -117,5 +125,18 @@ class LoginActivity : AppCompatActivity() {
             intent.putExtra("facebook_token", token)
             startActivity(intent)
         }
+    }
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(resources.getString(R.string.exit_title))
+        builder.setMessage(R.string.confirm_exit)
+        builder.setPositiveButton(R.string.accept) { _, _ ->
+            finishAffinity()
+        }
+        builder.setNegativeButton(R.string.cancel) { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create()
+        builder.show()
     }
 }

@@ -8,11 +8,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(private val signInClient: GoogleSignInClient,
-                                        /*private val signInAccount: GoogleSignInAccount?*/) : ViewModel() {
+class UserViewModel @Inject constructor(private val signInClient: GoogleSignInClient) : ViewModel() {
 
     fun getSignInClient() = signInClient
 
-    //fun getSignInAccount() = signInAccount
+    fun doDummyLogin(user: String, password: String):Boolean{
+        return (user == "peter" && password == "123")
+
+    }
+
 
 }
