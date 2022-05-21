@@ -13,6 +13,8 @@ class ProductViewHolder(view:View):RecyclerView.ViewHolder(view){
     fun bind(product: ProductEntity){
         binding.tvDocName.text = product.name
         binding.cvElement.setOnClickListener{
+            binding.pbarProducts.visibility = View.VISIBLE
+            binding.ivIcon.visibility = View.INVISIBLE
             val intent = Intent(binding.root.context,ProductDetailsActivity::class.java)
             intent.putExtra("product_id",product.id)
             binding.root.context.startActivity(intent)

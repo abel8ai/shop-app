@@ -3,24 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <item
-        android:id="@+id/nav_products"
-        android:icon="@android:drawable/ic_menu_today"
-        android:title="Productos" />
-    <item
-        android:id="@+id/nav_my_products"
-        android:icon="@android:drawable/btn_star_big_on"
-        android:title="Mis Productos" />
-    <item
-        android:id="@+id/nav_settings"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="Configuraciones" />
-    <item
-        android:id="@+id/nav_profile"
-        android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="Perfil" />
-    <item
-        android:id="@+id/nav_logoff"
-        android:icon="@android:drawable/ic_lock_power_off"
-        android:title="Cerrar Sesión" />
+        android:title="Tienda">
+        <menu>
+            <item
+                android:id="@+id/nav_products"
+                android:icon="@android:drawable/ic_menu_today"
+                android:title="Productos" />
+            <item
+                android:id="@+id/nav_my_products"
+                android:icon="@android:drawable/btn_star_big_on"
+                android:title="Mis Productos" />
+        </menu>
+    </item>
 
+    <item
+        android:title="Otros">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="Configuraciones" />
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@android:drawable/ic_menu_myplaces"
+                android:title="Perfil" />
+            <item
+                android:id="@+id/nav_logoff"
+                android:icon="@android:drawable/ic_lock_power_off"
+                android:title="Cerrar Sesión" />
+        </menu>
+    </item>
 </menu>

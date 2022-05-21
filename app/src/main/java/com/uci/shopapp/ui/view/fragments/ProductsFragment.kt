@@ -98,4 +98,11 @@ class ProductsFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        sectionProductList.clear()
+        loadData()
+        adapter.notifyDataSetChanged()
+    }
+
 }

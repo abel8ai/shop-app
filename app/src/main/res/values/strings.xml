@@ -8,6 +8,7 @@
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="buy">Comprar</string>
+    <string name="or">O</string>
 
 
 
@@ -15,7 +16,9 @@
     <string name="profile_frag">Perfil</string>
     <string name="settings_frag">Configuraciones</string>
     <string name="confirm_purchase_title">Confirmar compra</string>
+    <string name="exit_title">Cerrar aplicacion</string>
     <string name="confirm_purchase">Confirme que desea comprar este producto</string>
+    <string name="confirm_exit">¿Esta seguro que desea salir?</string>
     <string name="purchase_notification">Compra realizada con éxito</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="texto">Caution: If you need a Context object within your Fragment, you can call getActivity(). However, be careful to call getActivity() only when the fragment is attached to an activity. When the fragment is not yet attached, or was detached during the end of its lifecycle, getActivity() will return null</string>

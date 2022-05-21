@@ -3,8 +3,10 @@ package com.uci.shopapp.ui.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.facebook.*
@@ -104,5 +106,19 @@ class NavigationDrawerActivity : AppCompatActivity() {
             .addOnCompleteListener(this) {
                 // ...
             }
+    }
+
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(resources.getString(R.string.exit_title))
+        builder.setMessage(R.string.confirm_exit)
+        builder.setPositiveButton(R.string.accept) { _, _ ->
+            finishAffinity()
+        }
+        builder.setNegativeButton(R.string.cancel) { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create()
+        builder.show()
     }
 }
