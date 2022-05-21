@@ -7,9 +7,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.facebook.*
+import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.uci.shopapp.R
 import com.uci.shopapp.databinding.ActivityNavigationDrawerBinding
 import com.uci.shopapp.ui.view.fragments.MyProductsFragment
@@ -26,6 +26,7 @@ class NavigationDrawerActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by viewModels()
     private lateinit var toogle: ActionBarDrawerToggle
     private var googleAccount: GoogleSignInAccount? = null
+    private var facebookToken: AccessToken? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,8 @@ class NavigationDrawerActivity : AppCompatActivity() {
             R.string.drawer_open,
             R.string.drawer_close
         )
-        googleAccount = intent.extras?.get("account") as GoogleSignInAccount?
+        googleAccount = intent.extras?.get("google_account") as GoogleSignInAccount?
+        facebookToken = intent.extras?.get("facebook_token") as AccessToken?
         binding.drawerLayout.addDrawerListener(toogle)
         replaceFragment(ProductsFragment(), "Productos")
         toogle.syncState()
@@ -53,11 +55,22 @@ class NavigationDrawerActivity : AppCompatActivity() {
                 R.id.nav_settings -> replaceFragment(SettingsFragment(), "Configuraciones")
                 R.id.nav_profile -> replaceFragment(ProfileFragment(), "Perfil")
                 R.id.nav_logoff -> {
-                    if (googleAccount != null)
+                    if (googleAccount != null){
                         googleSignOut()
                         googleRevokeAccess()
                         finish()
                         startActivity(Intent(this,LoginActivity::class.java))
+                    }
+                    else if (facebookToken != null){
+                        GraphRequest(
+                            AccessToken.getCurrentAccessToken(),
+                            "/me/permissions/",
+                            null,
+                            HttpMethod.DELETE,
+                            { LoginManager.getInstance().logOut() }).executeAsync()
+                        finish()
+                        startActivity(Intent(this,LoginActivity::class.java))
+                    }
                 }
             }
             true
