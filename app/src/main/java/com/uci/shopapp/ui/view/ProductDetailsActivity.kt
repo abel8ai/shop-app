@@ -110,8 +110,7 @@ class ProductDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         builder.setMessage(R.string.confirm_purchase)
         builder.setPositiveButton(R.string.accept) { _, _ ->
             Toast.makeText(this, R.string.purchase_notification, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, NavigationDrawerActivity::class.java))
-            this.finish()
+            onBackPressed()
         }
         builder.setNegativeButton(R.string.cancel) { dialog, _ ->
             dialog.dismiss()
