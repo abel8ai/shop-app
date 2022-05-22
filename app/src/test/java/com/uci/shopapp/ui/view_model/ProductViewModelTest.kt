@@ -3,41 +3,51 @@ package com.uci.shopapp.ui.view_model
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.*
+import android.os.Build.VERSION_CODES.Q
 import com.uci.shopapp.data.model.database.ShopDatabase
 import com.uci.shopapp.data.model.database.dao.ProductDao
 import com.uci.shopapp.data.model.database.entities.ProductEntity
 import com.uci.shopapp.getorAwaitValue
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 
-internal class ProductViewModelTest {
+@RunWith(AndroidJUnit4::class)
+@Config(sdk = [Q])
+class ProductViewModelTest {
 
     private lateinit var shopDatabase:ShopDatabase
-    lateinit var productViewModel: ProductViewModel
+    private lateinit var productViewModel: ProductViewModel
+    @RelaxedMockK
     lateinit var productDao : ProductDao
 
     @Before
     fun createDb() {
+        MockKAnnotations.init(this)
         val context = ApplicationProvider.getApplicationContext<Context>()
         shopDatabase = Room.inMemoryDatabaseBuilder(context, ShopDatabase::class.java).build()
-        productDao = shopDatabase.getProductDao()
         productViewModel = ProductViewModel(shopDatabase)
     }
     @Test
-    fun whenTheDatabaseIsEmptyReturnsNull() = runBlocking {
+    fun whenDatabaseIsEmptyReturnsEmptyList() = runBlocking {
         // given
-        coEvery { productDao.getAllProducts() } returns null as MutableList<ProductEntity>
+        coEvery { productDao.getAllProducts() } returns mutableListOf<ProductEntity>()
         // when
         productViewModel.getAllProducts()
         val result = productViewModel.productsModel.getorAwaitValue()
         // then
         coVerify(exactly = 1) { productDao.getAllProducts() }
-        assertThat(result == null).isTrue()
+        assertThat(result == mutableListOf<ProductEntity>()).isTrue()
     }
 
     @Test
